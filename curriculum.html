@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Curriculum & README Generator</title>
+  <link rel="stylesheet" href="curriculum.css">
+  <link rel="stylesheet" href="common.css">
+  <style>
+    /* tiny fallback style for live preview environments */
+    html,body{height:100%;}
+  </style>
+</head>
+<body>
+  <nav class="main-nav">
+    <div class="nav-container">
+      <a href="INDEX.HTML" class="logo">
+        <img src="https://raw.githubusercontent.com/microsoft/vscode-docs/main/images/logo-stable.png" alt="Logo">
+        DevDocs
+      </a>
+      <ul class="nav-links">
+        <li><a href="INDEX.HTML">Início</a></li>
+        <li><a href="curriculum_cv.html">Currículo</a></li>
+        <li><a href="curriculum.html" class="active">README</a></li>
+      </ul>
+    </div>
+  </nav>
+  <header class="site-header">
+    <div class="container">
+      <h1>Curriculum & README Generator</h1>
+      <p class="subtitle">Preencha o formulário e gere um README / currículo pronto para copiar ou baixar.</p>
+    </div>
+  </header>
+
+  <main class="container main-grid">
+    <!-- Formulário (lado esquerdo) -->
+    <section class="card form-card" aria-labelledby="form-title">
+      <h2 id="form-title">Informações</h2>
+
+      <label>Nome completo
+        <input id="inputNome" type="text" placeholder="Seu nome completo">
+      </label>
+
+      <label>Título profissional
+        <input id="inputTitulo" type="text" placeholder="Ex: Desenvolvedor Front-end">
+      </label>
+
+      <label>Resumo / Sobre
+        <textarea id="inputResumo" rows="4" placeholder="Um resumo curto sobre você"></textarea>
+      </label>
+
+      <label>Habilidades (separe por vírgula)
+        <input id="inputHabilidades" type="text" placeholder="JavaScript, HTML, CSS">
+      </label>
+
+      <label>Contato (telefone / email)
+        <input id="inputContato" type="text" placeholder="ex: +55 11 99999-9999 / voce@exemplo.com">
+      </label>
+
+      <div class="actions">
+        <button id="btnGerar">Gerar Pré-visualização</button>
+        <button id="btnCopiar">Copiar README</button>
+        <button id="btnBaixar">Baixar README.md</button>
+      </div>
+    </section>
+
+    <!-- Preview / resultado (lado direito) -->
+    <aside class="card preview-card" aria-labelledby="preview-title">
+      <h2 id="preview-title">Pré-visualização (README)</h2>
+      <div id="previewArea" class="preview-area" tabindex="0">
+        <!-- conteúdo será criado dinamicamente -->
+      </div>
+    </aside>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-contact">
+        <a href="https://github.com/seu-usuario" target="_blank">GitHub</a>
+        <a href="https://linkedin.com/in/seu-usuario" target="_blank">LinkedIn</a>
+        <a href="mailto:contato@exemplo.com">Email</a>
+      </div>
+      <div class="footer-rights">
+        © 2025 DevDocs. Todos os direitos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <script src="curriculum.js"></script>
+</body>
+</html>

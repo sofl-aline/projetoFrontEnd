@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gerador de Currículo</title>
+    <link rel="stylesheet" href="common.css">
+    <style>
+        :root {
+            --primary: #0052ff;
+            --border: #e5e7eb;
+            --text: #111827;
+            --bg: #f9fafb;
+            --radius: 8px;
+            --footer-bg: #1a1a1a;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        /* Estilos do Menu Nav */
+        .main-nav {
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .logo img {
+            height: 40px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            transition: background-color 0.3s;
+        }
+        .nav-links a:hover {
+            background-color: var(--bg);
+        }
+        .nav-links a.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* Estilos do Footer */
+        footer {
+            background: var(--footer-bg);
+            color: white;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .footer-contact {
+            display: flex;
+            gap: 2rem;
+        }
+        .footer-contact a {
+            color: white;
+            text-decoration: none;
+        }
+        .footer-rights {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        body {
+            font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+        }
+        .header {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: var(--radius);
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 16px;
+            display: grid;
+            grid-template-columns: 40% 60%;
+            gap: 20px;
+        }
+        .tabs {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            padding: 4px;
+            border-radius: var(--radius);
+            margin-bottom: 24px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+        .tab {
+            padding: 8px 6px;
+            border: none;
+            background: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 14px;
+            text-align: center;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            font-weight: 500;
+            min-width: fit-content;
+        }
+        .tab:not(:last-child) {
+            margin-right: 1px;
+        }
+        .tab:hover {
+            background: var(--bg);
+        }
+        .tab.active {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        @media (max-width: 1024px) {
+            .tab {
+                padding: 8px 6px;
+                font-size: 13px;
+            }
+        }
+        .form-section {
+            background: #fff;
+            padding: 24px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 14px;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .form-group small {
+            display: block;
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+        .btn-secondary {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 8px 16px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            margin-top: 16px;
+        }
+        .preview {
+            background: #fff;
+            padding: 24px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            position: relative;
+        }
+        .preview h2 {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        .preview h3 {
+            color: var(--primary);
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+        .preview .btn-primary {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            z-index: 1;
+        }
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            .form-content {
+                order: 1;
+            }
+            .preview {
+                order: 2;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="https://via.placeholder.com/40x40" alt="DevDocs Logo">
+                DevDocs
+            </a>
+            <ul class="nav-links">
+                <li><a href="curriculum_cv.html" class="active">Currículo</a></li>
+                <li><a href="curriculum.html">README</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="form-content">
+            <nav class="tabs">
+                <button class="tab active" data-tab="dados">Dados</button>
+                <button class="tab" data-tab="experiencia">Experiência</button>
+                <button class="tab" data-tab="educacao">Educação</button>
+                <button class="tab" data-tab="habilidades">Habilidades</button>
+                <button class="tab" data-tab="certificados">Certificados</button>
+            </nav>
+
+            <section class="form-section" id="secaoDados">
+                <div class="form-group">
+                    <label>Nome Completo</label>
+                    <input type="text" id="nome" placeholder="Ex: João Silva">
+                </div>
+                <div class="form-group">
+                    <label>Cargo</label>
+                    <input type="text" id="cargo" placeholder="Ex: Desenvolvedor Front-end">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" placeholder="Ex: joao@exemplo.com">
+                </div>
+                <div class="form-group">
+                    <label>Telefone</label>
+                    <input type="tel" id="telefone" placeholder="Ex: +55 11 99999-9999">
+                </div>
+                <div class="form-group">
+                    <label>LinkedIn</label>
+                    <input type="url" id="linkedin" placeholder="Ex: linkedin.com/in/joaosilva">
+                </div>
+                <div class="form-group">
+                    <label>GitHub</label>
+                    <input type="url" id="github" placeholder="Ex: github.com/joaosilva">
+                </div>
+                <div class="form-group">
+                    <label>Site Pessoal</label>
+                    <input type="url" id="site" placeholder="Ex: joaosilva.dev">
+                </div>
+                <div class="form-group">
+                    <label>Resumo Profissional</label>
+                    <textarea id="resumoProfissional" rows="4" placeholder="Descreva brevemente sua experiência, objetivos e principais competências"></textarea>
+                    <small>Máximo 500 caracteres</small>
+                </div>
+            </section>
+
+            <section class="form-section" id="secaoExperiencia" style="display: none;">
+                <div class="form-group">
+                    <label>Empresa</label>
+                    <input type="text" id="empresa" placeholder="Ex: Tech Solutions Inc.">
+                </div>
+                <div class="form-group">
+                    <label>Cargo</label>
+                    <input type="text" id="cargoExp" placeholder="Ex: Desenvolvedor Front-end Sênior">
+                </div>
+                <div class="form-group">
+                    <label>Período</label>
+                    <input type="text" id="periodo" placeholder="Ex: Jan 2020 - Presente">
+                </div>
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <textarea id="descricao" rows="4" class="form-control" 
+                        placeholder="Descreva suas principais atividades e conquistas"></textarea>
+                </div>
+                <button type="button" class="btn-secondary" id="btnAddExperiencia">+ Adicionar Experiência</button>
+            </section>
+
+            <section class="form-section" id="secaoEducacao" style="display: none;">
+                <div class="form-group">
+                    <label>Instituição</label>
+                    <input type="text" id="instituicao" placeholder="Ex: Universidade Federal">
+                </div>
+                <div class="form-group">
+                    <label>Curso</label>
+                    <input type="text" id="curso" placeholder="Ex: Ciência da Computação">
+                </div>
+                <div class="form-group">
+                    <label>Período</label>
+                    <input type="text" id="periodoEdu" placeholder="Ex: 2016 - 2020">
+                </div>
+                <div class="form-group">
+                    <label>Tipo</label>
+                    <select id="tipoEdu" class="form-control">
+                        <option value="Técnico">Técnico</option>
+                        <option value="Ensino Superior">Ensino Superior</option>
+                        <option value="Pós-graduação">Pós-graduação</option>
+                        <option value="Mestrado">Mestrado</option>
+                        <option value="Doutorado">Doutorado</option>
+                    </select>
+                </div>
+                <button type="button" class="btn-secondary" id="btnAddEducacao">+ Adicionar Formação</button>
+            </section>
+
+                        <section class="form-section" id="secaoHabilidades" style="display: none;">
+                <div class="form-group">
+                    <label>Habilidades Técnicas</label>
+                    <input type="text" id="habilidadesTec" placeholder="Ex: JavaScript, HTML, CSS, React">
+                    <small>Separe as habilidades por vírgula</small>
+                </div>
+                <div class="form-group">
+                    <label>Habilidades Pessoais</label>
+                    <input type="text" id="habilidadesSoft" placeholder="Ex: Trabalho em equipe, Comunicação">
+                    <small>Separe as habilidades por vírgula</small>
+                </div>
+                <div class="form-group">
+                    <label>Idiomas</label>
+                    <input type="text" id="idiomas" placeholder="Ex: Inglês (Fluente), Espanhol (Intermediário)">
+                    <small>Separe os idiomas por vírgula</small>
+                </div>
+            </section>
+
+            <section class="form-section" id="secaoCertificados" style="display: none;">
+                <h3 style="margin-bottom: 20px; color: var(--primary);">Certificados</h3>
+                <div class="form-group">
+                    <label>Título do Certificado</label>
+                    <input type="text" id="certificadoTitulo" placeholder="Ex: AWS Cloud Practitioner">
+                </div>
+                <div class="form-group">
+                    <label>Instituição</label>
+                    <input type="text" id="certificadoInstituicao" placeholder="Ex: Amazon Web Services">
+                </div>
+                <div class="form-group">
+                    <label>Ano de Emissão</label>
+                    <input type="number" id="certificadoAno" placeholder="Ex: 2025" min="1900" max="2100">
+                </div>
+                <button type="button" class="btn-secondary" id="btnAddCertificado">+ Adicionar Certificado</button>
+
+                <h3 style="margin: 30px 0 20px; color: var(--primary);">Palestras e Minicursos</h3>
+                <div class="form-group">
+                    <label>Título</label>
+                    <input type="text" id="palestraTitulo" placeholder="Ex: Workshop de Git e GitHub">
+                </div>
+                <div class="form-group">
+                    <label>Instituição</label>
+                    <input type="text" id="palestraInstituicao" placeholder="Ex: UNIESP">
+                </div>
+                <button type="button" class="btn-secondary" id="btnAddPalestra">+ Adicionar Palestra/Minicurso</button>
+            </section>
+        </div>
+
+        <div class="preview" id="previewArea">
+            <button class="btn-primary" id="btnGerar">Gerar Currículo</button>
+            <h2>Preview ao Vivo</h2>
+            <div id="previewContent"></div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Estado global do currículo
+            const curriculo = {
+                experiencias: [],
+                educacao: [],
+                habilidadesTec: [],
+                habilidadesSoft: [],
+                idiomas: [],
+                certificados: [],
+                palestras: []
+            };
+
+            // Tabs e seções
+            const tabs = document.querySelectorAll('.tab');
+            const secoes = {
+                dados: document.getElementById('secaoDados'),
+                experiencia: document.getElementById('secaoExperiencia'),
+                educacao: document.getElementById('secaoEducacao'),
+                habilidades: document.getElementById('secaoHabilidades'),
+                certificados: document.getElementById('secaoCertificados')
+            };
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const secaoAtiva = tab.getAttribute('data-tab');
+                    
+                    // Atualiza tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    // Mostra seção correta
+                    Object.values(secoes).forEach(s => s.style.display = 'none');
+                    secoes[secaoAtiva].style.display = 'block';
+                });
+            });
+
+            // Adicionar experiência
+            document.getElementById('btnAddExperiencia').addEventListener('click', () => {
+                const empresa = document.getElementById('empresa').value;
+                const cargo = document.getElementById('cargoExp').value;
+                const periodo = document.getElementById('periodo').value;
+                const descricao = document.getElementById('descricao').value;
+
+                if (empresa && cargo && periodo) {
+                    curriculo.experiencias.push({ empresa, cargo, periodo, descricao });
+                    
+                    // Limpa campos
+                    ['empresa', 'cargoExp', 'periodo', 'descricao'].forEach(id => 
+                        document.getElementById(id).value = '');
+                    
+                    atualizarPreview();
+                }
+            });
+
+            // Adicionar educação
+            document.getElementById('btnAddEducacao').addEventListener('click', () => {
+                const instituicao = document.getElementById('instituicao').value;
+                const curso = document.getElementById('curso').value;
+                const periodo = document.getElementById('periodoEdu').value;
+                const tipo = document.getElementById('tipoEdu').value;
+
+                if (instituicao && curso && periodo) {
+                    curriculo.educacao.push({ instituicao, curso, periodo, tipo });
+                    
+                    // Limpa campos
+                    ['instituicao', 'curso', 'periodoEdu'].forEach(id => 
+                        document.getElementById(id).value = '');
+                    
+                    atualizarPreview();
+                }
+            });
+
+            // Adicionar certificado
+            document.getElementById('btnAddCertificado').addEventListener('click', () => {
+                const titulo = document.getElementById('certificadoTitulo').value;
+                const instituicao = document.getElementById('certificadoInstituicao').value;
+                const ano = document.getElementById('certificadoAno').value;
+
+                if (titulo && instituicao && ano) {
+                    curriculo.certificados.push({ titulo, instituicao, ano });
+                    
+                    // Limpa campos
+                    ['certificadoTitulo', 'certificadoInstituicao', 'certificadoAno'].forEach(id => 
+                        document.getElementById(id).value = '');
+                    
+                    atualizarPreview();
+                }
+            });
+
+            // Adicionar certificado
+            document.getElementById('btnAddCertificado').addEventListener('click', () => {
+                const titulo = document.getElementById('certificadoTitulo').value;
+                const instituicao = document.getElementById('certificadoInstituicao').value;
+                const ano = document.getElementById('certificadoAno').value;
+
+                if (titulo && instituicao && ano) {
+                    curriculo.certificados.push({ titulo, instituicao, ano });
+                    
+                    // Limpa campos
+                    ['certificadoTitulo', 'certificadoInstituicao', 'certificadoAno'].forEach(id => 
+                        document.getElementById(id).value = '');
+                    
+                    atualizarPreview();
+                }
+            });
+
+            // Preview ao vivo
+            const previewContent = document.getElementById('previewContent');
+            const inputs = document.querySelectorAll('input, textarea, select');
+
+            function atualizarPreview() {
+                const nome = document.getElementById('nome').value;
+                const cargo = document.getElementById('cargo').value;
+                const email = document.getElementById('email').value;
+                const telefone = document.getElementById('telefone').value;
+                const linkedin = document.getElementById('linkedin').value;
+                const github = document.getElementById('github').value;
+                const site = document.getElementById('site').value;
+                const resumoProfissional = document.getElementById('resumoProfissional').value;
+
+                // Habilidades
+                const habilidadesTec = document.getElementById('habilidadesTec').value
+                    .split(',').map(h => h.trim()).filter(Boolean);
+                const habilidadesSoft = document.getElementById('habilidadesSoft').value
+                    .split(',').map(h => h.trim()).filter(Boolean);
+                const idiomas = document.getElementById('idiomas').value
+                    .split(',').map(i => i.trim()).filter(Boolean);
+
+                let html = `
+                    <h2>${nome || 'Seu Nome'}</h2>
+                    <h3>${cargo || 'Seu Cargo'}</h3>
+                    <p>📧 ${email || 'seu.email@exemplo.com'}</p>
+                    <p>📱 ${telefone || '(00) 00000-0000'}</p>
+                    ${linkedin ? `<p>🔗 LinkedIn: ${linkedin}</p>` : ''}
+                    ${github ? `<p>💻 GitHub: ${github}</p>` : ''}
+                    ${site ? `<p>🌐 Site: ${site}</p>` : ''}
+                `;
+
+                if (resumoProfissional) {
+                    html += `
+                    <h3>Resumo Profissional</h3>
+                    <p>${resumoProfissional}</p>
+                    `;
+                }
+
+                // Experiências
+                if (curriculo.experiencias.length > 0) {
+                    html += '<h3>Experiência Profissional</h3>';
+                    curriculo.experiencias.forEach(exp => {
+                        html += `
+                            <div class="experiencia">
+                                <h4>${exp.cargo} - ${exp.empresa}</h4>
+                                <p>${exp.periodo}</p>
+                                ${exp.descricao ? `<p>${exp.descricao}</p>` : ''}
+                            </div>
+                        `;
+                    });
+                }
+
+                // Educação
+                if (curriculo.educacao.length > 0) {
+                    html += '<h3>Formação Acadêmica</h3>';
+                    curriculo.educacao.forEach(edu => {
+                        html += `
+                            <div class="educacao">
+                                <h4>${edu.tipo} em ${edu.curso}</h4>
+                                <p>${edu.instituicao} - ${edu.periodo}</p>
+                            </div>
+                        `;
+                    });
+                }
+
+                // Habilidades
+                if (habilidadesTec.length > 0) {
+                    html += '<h3>Habilidades Técnicas</h3>';
+                    html += '<p>' + habilidadesTec.join(', ') + '</p>';
+                }
+
+                if (habilidadesSoft.length > 0) {
+                    html += '<h3>Habilidades Pessoais</h3>';
+                    html += '<p>' + habilidadesSoft.join(', ') + '</p>';
+                }
+
+                if (idiomas.length > 0) {
+                    html += '<h3>Idiomas</h3>';
+                    html += '<p>' + idiomas.join(', ') + '</p>';
+                }
+
+                // Certificados
+                if (curriculo.certificados && curriculo.certificados.length > 0) {
+                    html += '<h3>Certificações</h3>';
+                    curriculo.certificados.forEach(cert => {
+                        html += `
+                            <div class="certificado">
+                                <h4>${cert.titulo}</h4>
+                                <p>${cert.instituicao} - ${cert.ano}</p>
+                            </div>
+                        `;
+                    });
+                }
+
+                // Palestras e Minicursos
+                if (curriculo.palestras && curriculo.palestras.length > 0) {
+                    html += '<h3>Palestras e Minicursos</h3>';
+                    curriculo.palestras.forEach(palestra => {
+                        html += `
+                            <div class="palestra">
+                                <h4>${palestra.titulo}</h4>
+                                <p>${palestra.instituicao}</p>
+                            </div>
+                        `;
+                    });
+                }
+
+                previewContent.innerHTML = html;
+            }
+
+            inputs.forEach(input => {
+                input.addEventListener('input', atualizarPreview);
+            });
+
+            // Inicializa preview
+            atualizarPreview();
+        });
+    </script>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-contact">
+                <a href="mailto:contato@devdocs.com">contato@devdocs.com</a>
+                <a href="tel:+5583999999999">+55 (83) 99999-9999</a>
+            </div>
+            <div class="footer-rights">
+                2025 - Todos os direitos reservados
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
