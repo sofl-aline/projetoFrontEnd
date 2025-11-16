@@ -1,4 +1,4 @@
-# 📚 DevDocs - Gerador de Currículos e README
+# 📚 Jobly - Gerador de Currículos e README
 
 > Projeto da disciplina de Front End com lógica imperativa
 
