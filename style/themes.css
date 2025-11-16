@@ -1,0 +1,41 @@
+/**
+ * THEMES.CSS
+ * Temas e variações de cor
+ * Define esquemas de cores e estilos temáticos
+ */
+
+/* Tema Principal (Azul) */
+.theme-blue {
+    --primary: #0052ff;
+    --accent: #2563eb;
+}
+
+/* Tema Verde */
+.theme-green {
+    --primary: #06b58a;
+    --accent: #10b981;
+}
+
+/* Tema Escuro (caso queira implementar) */
+.theme-dark {
+    --bg: #1a1a1a;
+    --card: #2d2d2d;
+    --text: #f9fafb;
+    --border: #404040;
+}
+
+/* Estilos específicos da página inicial */
+.title {
+    font-size: 32px;
+    margin: 0 0 8px;
+}
+
+.lead {
+    color: var(--muted);
+    margin: 0 0 18px;
+}
+
+.question {
+    margin: 20px 0 30px;
+    color: var(--muted);
+}
