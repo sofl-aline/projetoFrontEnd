@@ -4,31 +4,39 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DevDocs: Gerador Rápido</title>
-    <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="common.css">
-    <style>html,body{height:100%}</style>
+    
+    <!-- Importação dos arquivos CSS reorganizados -->
+    <link rel="stylesheet" href="style/globals.css">
+    <link rel="stylesheet" href="style/layout.css">
+    <link rel="stylesheet" href="style/components.css">
+    <link rel="stylesheet" href="style/themes.css">
 </head>
 <body>
+    <!-- Menu de Navegação Principal -->
     <nav class="main-nav">
         <div class="nav-container">
-            <a href="INDEX.HTML" class="logo">
+            <a href="index.html" class="logo">
                 <img src="https://raw.githubusercontent.com/microsoft/vscode-docs/main/images/logo-stable.png" alt="Logo">
                 Jobly
             </a>
             <ul class="nav-links">
-                <li><a href="INDEX.HTML" class="active">Início</a></li>
+                <li><a href="index.html" class="active">Início</a></li>
                 <li><a href="curriculum_cv.html">Currículo</a></li>
                 <li><a href="curriculum.html">README</a></li>
             </ul>
         </div>
     </nav>
+
+    <!-- Seção Hero (Principal) -->
     <main class="hero">
         <div class="container">
             <h1 class="title">DevDocs: Gerador Rápido</h1>
             <p class="lead">Crie seu currículo profissional ou o README do seu projeto em minutos.</p>
             <p class="question">O que você gostaria de criar hoje?</p>
 
+            <!-- Cards de Opções -->
             <div class="cards">
+                <!-- Card: Criar Currículo -->
                 <article class="card">
                     <div class="icon icon-blue">📄</div>
                     <h3>Criar Currículo</h3>
@@ -36,6 +44,7 @@
                     <a class="btn btn-blue" href="curriculum_cv.html">Começar</a>
                 </article>
 
+                <!-- Card: Criar README -->
                 <article class="card">
                     <div class="icon icon-green">🐱</div>
                     <h3>Criar README.md</h3>
@@ -45,5 +54,18 @@
             </div>
         </div>
     </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-contact">
+                <a href="mailto:contato@devdocs.com">contato@devdocs.com</a>
+                <a href="tel:+5583999999999">+55 (83) 99999-9999</a>
+            </div>
+            <div class="footer-rights">
+                © 2025 - Todos os direitos reservados
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
