@@ -28,6 +28,7 @@ DevDocs é uma aplicação web que permite aos usuários criar:
 - Copiar para área de transferência
 
 ## 📁 Estrutura do Projeto
+```bash
 /project
 │
 ├── index.html              # Página inicial
@@ -48,6 +49,8 @@ DevDocs é uma aplicação web que permite aos usuários criar:
 │   └── ui.js               # Funções de interface
 │
 └── README.md               # Este arquivo
+```
+
 
 ## 🛠️ Tecnologias Utilizadas
 
