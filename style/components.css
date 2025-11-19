@@ -69,6 +69,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 8px;
 }
 
 /* Ícones dos Cards */
@@ -121,11 +122,23 @@
 }
 
 .btn-blue {
-    background: var(--blue, #1e3bf6);
+    background: var(--blue, #2BA3EE);
+    display: flex;
+    width: 311.8px;
+    padding: 10px 132px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
 }
 
-.btn-green {
-    background: var(--green, #06b58a);
+.btn-purple {
+    background: var(--green, #AD7FF5);
+    display: flex;
+    width: 311.8px;
+    padding: 10px 132px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
 }
 
 .btn-primary {
@@ -323,7 +336,7 @@
     gap: 30px;
     padding: 30px;
     background: #ffffff;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
     font-size: 14px;
     line-height: 1.5;
     color: #1f2937;
