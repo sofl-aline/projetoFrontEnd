@@ -16,10 +16,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnBaixar) btnBaixar.addEventListener('click', baixarREADME);
 
     // Atualiza preview em tempo real ao digitar
-    ['inputNome', 'inputTitulo', 'inputResumo', 'inputHabilidades', 'inputContato'].forEach(id => {
+    const campos = [
+        'inputTitulo', 'inputDescricaoCurta', 'inputDescricaoCompleta',
+        'inputTecnologias', 'inputLicenca', 'inputComoInstalar', 'inputComoRodar'
+    ];
+    
+    campos.forEach(id => {
         const el = document.getElementById(id);
         if (el) {
             el.addEventListener('input', gerarPreview);
+            el.addEventListener('change', gerarPreview);
         }
     });
 
@@ -33,46 +39,58 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function montarREADME() {
     // Coleta valores dos campos
-    const nome = document.getElementById('inputNome')?.value.trim() || '';
     const titulo = document.getElementById('inputTitulo')?.value.trim() || '';
-    const resumo = document.getElementById('inputResumo')?.value.trim() || '';
-    const habilidades = document.getElementById('inputHabilidades')?.value.trim() || '';
-    const contato = document.getElementById('inputContato')?.value.trim() || '';
+    const descricaoCurta = document.getElementById('inputDescricaoCurta')?.value.trim() || '';
+    const descricaoCompleta = document.getElementById('inputDescricaoCompleta')?.value.trim() || '';
+    const tecnologias = document.getElementById('inputTecnologias')?.value.trim() || '';
+    const licenca = document.getElementById('inputLicenca')?.value.trim() || '';
+    const comoInstalar = document.getElementById('inputComoInstalar')?.value.trim() || '';
+    const comoRodar = document.getElementById('inputComoRodar')?.value.trim() || '';
 
-    // Processa habilidades (separa por vírgula e remove espaços)
-    const habilidadesArray = habilidades 
-        ? habilidades.split(',').map(s => s.trim()).filter(Boolean) 
+    // Processa tecnologias (separa por vírgula e remove espaços)
+    const tecnologiasArray = tecnologias 
+        ? tecnologias.split(',').map(s => s.trim()).filter(Boolean) 
         : [];
 
     // Gera markdown estruturado
     let md = '';
     
-    // Adiciona nome como título principal
-    if (nome) md += `# ${nome}\n\n`;
+    // Adiciona título como H1
+    if (titulo) md += `# ${titulo}\n\n`;
     
-    // Adiciona título profissional em negrito
-    if (titulo) md += `**${titulo}**\n\n`;
+    // Adiciona descrição curta
+    if (descricaoCurta) md += `${descricaoCurta}\n\n`;
     
-    // Adiciona resumo/sobre
-    if (resumo) md += `${resumo}\n\n`;
+    // Adiciona descrição completa
+    if (descricaoCompleta) md += `## 📋 Descrição\n\n${descricaoCompleta}\n\n`;
     
-    // Adiciona seção de habilidades
-    if (habilidadesArray.length) {
-        md += `## Habilidades\n`;
-        habilidadesArray.forEach(h => md += `- ${h}\n`);
+    // Adiciona seção de tecnologias
+    if (tecnologiasArray.length) {
+        md += `## 🛠️ Tecnologias\n\n`;
+        tecnologiasArray.forEach(t => md += `- ${t}\n`);
         md += `\n`;
     }
     
-    // Adiciona informações de contato
-    if (contato) md += `## Contato\n${contato}\n`;
+    // Adiciona seção de instalação
+    if (comoInstalar) {
+        md += `## 📦 Como Instalar\n\n\`\`\`bash\n${comoInstalar}\n\`\`\`\n\n`;
+    }
+    
+    // Adiciona seção de como rodar
+    if (comoRodar) {
+        md += `## 🚀 Como Rodar\n\n\`\`\`bash\n${comoRodar}\n\`\`\`\n\n`;
+    }
+    
+    // Adiciona licença
+    if (licenca) md += `## 📄 Licença\n\n${licenca}\n`;
 
     // Retorna markdown ou mensagem padrão
     return md || 'Preencha o formulário à esquerda para gerar o README.';
 }
 
 /**
- * Gera o preview visual do README
- * Converte Markdown para HTML de forma simples
+ * Gera o preview visual do README em formato Markdown
+ * Exibe o texto bruto com formatação de código
  */
 function gerarPreview() {
     const preview = document.getElementById('previewArea');
@@ -85,47 +103,87 @@ function gerarPreview() {
 
     const md = montarREADME();
 
-    // Renderização simples: converte linhas de markdown para HTML
-    const linhas = md.split('\n');
-    linhas.forEach((linha) => {
-        if (!linha) return; // Ignora linhas vazias
+    // Container para botões (lado a lado)
+    const buttonContainer = document.createElement('div');
+    buttonContainer.style.cssText = `
+        display: flex;
+        gap: 8px;
+        margin-bottom: 12px;
+    `;
+    preview.appendChild(buttonContainer);
+
+    // Adiciona botão para copiar direto do preview
+    const copyButton = document.createElement('button');
+    copyButton.textContent = '📋 Copiar Markdown';
+    copyButton.className = 'btn-secondary';
+    copyButton.style.cssText = `
+        flex: 1;
+        padding: 8px 12px;
+        font-size: 14px;
+    `;
+    copyButton.addEventListener('click', copiarREADME);
+    buttonContainer.appendChild(copyButton);
+
+    // Adiciona botão para baixar README
+    const downloadButton = document.createElement('button');
+    downloadButton.textContent = '⬇️ Baixar README';
+    downloadButton.className = 'btn-secondary';
+    downloadButton.style.cssText = `
+        flex: 1;
+        padding: 8px 12px;
+        font-size: 14px;
+    `;
+    downloadButton.addEventListener('click', baixarREADME);
+    buttonContainer.appendChild(downloadButton);
+
+    // Cria container com formatação de código Markdown
+    const preContainer = document.createElement('div');
+    preContainer.className = 'markdown-preview';
+    preContainer.style.cssText = `
+        background-color: #f5f5f5;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        padding: 16px;
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #333;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    `;
+
+    // Renderiza o markdown com destaque sintático básico
+    const lines = md.split('\n');
+    const htmlLines = lines.map(linha => {
+        let html = linha;
         
-        let el;
+        // Escape de caracteres especiais HTML
+        html = html
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
         
-        // Identifica tipo de linha e cria elemento apropriado
-        if (linha.startsWith('# ')) {
-            // Título H1
-            el = document.createElement('h1');
-            el.textContent = linha.replace('# ', '');
-        } else if (linha.startsWith('## ')) {
-            // Título H2
-            el = document.createElement('h2');
-            el.textContent = linha.replace('## ', '');
-        } else if (linha.startsWith('- ')) {
-            // Item de lista
-            let last = preview.lastElementChild;
-            
-            // Se o último elemento não for UL, cria um
-            if (!last || last.tagName.toLowerCase() !== 'ul') {
-                const ul = document.createElement('ul');
-                preview.appendChild(ul);
-                last = ul;
-            }
-            
-            // Cria item da lista
-            const li = document.createElement('li');
-            li.textContent = linha.replace('- ', '');
-            preview.lastElementChild.appendChild(li);
-            return; // Já adicionou, não precisa continuar
-        } else {
-            // Parágrafo normal
-            el = document.createElement('p');
-            el.textContent = linha;
+        // Aplica cores para diferentes elementos Markdown
+        if (html.startsWith('# ')) {
+            // Títulos H1
+            html = `<span style="color: #d63384; font-weight: bold;">${html}</span>`;
+        } else if (html.startsWith('## ')) {
+            // Títulos H2
+            html = `<span style="color: #6610f2; font-weight: bold;">${html}</span>`;
+        } else if (html.startsWith('- ')) {
+            // Listas
+            html = `<span style="color: #198754;">${html}</span>`;
+        } else if (html.startsWith('**') && html.endsWith('**')) {
+            // Texto em negrito
+            html = `<span style="color: #0d6efd; font-weight: bold;">${html}</span>`;
         }
         
-        // Adiciona elemento ao preview
-        preview.appendChild(el);
+        return html;
     });
+
+    preContainer.innerHTML = htmlLines.join('\n');
+    preview.appendChild(preContainer);
 }
 
 /**

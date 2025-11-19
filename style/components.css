@@ -212,9 +212,10 @@
 .tabs {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 12px;
     background: #fff;
-    padding: 4px;
+    padding: 8px 0;
     border-radius: var(--radius);
     margin-bottom: 24px;
     overflow-x: auto;
@@ -227,26 +228,28 @@
 }
 
 .tab {
-    padding: 8px 6px;
+    padding: 10px 20px;
     border: none;
     background: none;
     border-radius: var(--radius);
     cursor: pointer;
-    font-size: 14px;
+    font-size: 15px;
     text-align: center;
     white-space: nowrap;
     transition: all 0.3s ease;
     flex-shrink: 0;
     font-weight: 500;
     min-width: fit-content;
+    color: #666;
 }
 
 .tab:not(:last-child) {
-    margin-right: 1px;
+    margin-right: 0;
 }
 
 .tab:hover {
-    background: var(--bg);
+    background: #f0f0f0;
+    color: #333;
 }
 
 .tab.active {

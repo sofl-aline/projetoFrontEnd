@@ -8,15 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Seleciona todos os botões de aba
     const tabs = document.querySelectorAll('.tab');
     
-    // Objeto com referências para todas as seções
-    const secoes = {
-        dados: document.getElementById('secaoDados'),
-        experiencia: document.getElementById('secaoExperiencia'),
-        educacao: document.getElementById('secaoEducacao'),
-        habilidades: document.getElementById('secaoHabilidades'),
-        certificados: document.getElementById('secaoCertificados')
-    };
-
     // Adiciona evento de clique em cada aba
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
@@ -29,14 +20,21 @@ document.addEventListener('DOMContentLoaded', () => {
             // Adiciona classe 'active' na aba clicada
             tab.classList.add('active');
             
-            // Esconde todas as seções
-            Object.values(secoes).forEach(s => {
-                if (s) s.style.display = 'none';
-            });
+            // Encontra o container pai das abas
+            const tabContainer = tab.closest('.form-content');
             
-            // Mostra apenas a seção correspondente à aba clicada
-            if (secoes[secaoAtiva]) {
-                secoes[secaoAtiva].style.display = 'block';
+            if (tabContainer) {
+                // Esconde todas as seções dentro deste container
+                const secoes = tabContainer.querySelectorAll('.form-section');
+                secoes.forEach(s => {
+                    s.style.display = 'none';
+                });
+                
+                // Mostra apenas a seção correspondente à aba clicada
+                const secaoSelecionada = tabContainer.querySelector(`#secao${secaoAtiva.charAt(0).toUpperCase() + secaoAtiva.slice(1)}`);
+                if (secaoSelecionada) {
+                    secaoSelecionada.style.display = 'block';
+                }
             }
         });
     });
