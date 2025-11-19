@@ -41,9 +41,60 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     if (btnGerar) {
-        btnGerar.addEventListener('click', () => {
-            alert('Função de gerar PDF será implementada!');
-        });
+        btnGerar.addEventListener('click', gerarPDF);
+    }
+
+    /**
+     * Gera e baixa o PDF a partir do conteúdo de `#previewContent`.
+     * Usa a biblioteca html2pdf (inserida em curriculum_cv.html).
+     */
+    function gerarPDF() {
+        const preview = document.getElementById('previewContent');
+        if (!preview) {
+            alert('Área de preview não encontrada. Atualize a página e tente novamente.');
+            return;
+        }
+
+        // Nome do arquivo baseado no nome do usuário
+        const nome = (document.getElementById('nome')?.value || 'meu-curriculo')
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[^a-z0-9-]/g, '');
+        const fileName = `${nome || 'curriculo'}.pdf`;
+
+        // Opções recomendadas para A4
+        const opt = {
+            margin:       0.5,
+            filename:     fileName,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true },
+            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
+
+        try {
+            // Clonar o elemento para evitar alterações de DOM durante a renderização
+            const clone = preview.cloneNode(true);
+
+            // Criar um container temporário fora da tela para garantir estilos aplicados
+            const wrapper = document.createElement('div');
+            wrapper.style.position = 'fixed';
+            wrapper.style.left = '-9999px';
+            wrapper.appendChild(clone);
+            document.body.appendChild(wrapper);
+
+            // Gera o PDF e remove o wrapper quando concluído
+            window.html2pdf().set(opt).from(clone).save().then(() => {
+                document.body.removeChild(wrapper);
+            }).catch(err => {
+                document.body.removeChild(wrapper);
+                console.error('Erro ao gerar PDF:', err);
+                alert('Ocorreu um erro ao gerar o PDF. Veja o console para detalhes.');
+            });
+        } catch (e) {
+            console.error(e);
+            alert('Ocorreu um erro ao gerar o PDF. Atualize a página e tente novamente.');
+        }
     }
 
     /**
@@ -187,9 +238,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // === SIDEBAR: DETAILS ===
         html += `<div class="ats-sidebar-section">
-            <h3>Details</h3>
+            <h3>DETALHES</h3>
             <p><strong>Email</strong><br>${email}</p>
-            <p><strong>Phone</strong><br>${telefone}</p>`;
+            <p><strong>Telefone</strong><br>${telefone}</p>`;
         
         if (linkedin) html += `<p><strong>LinkedIn</strong><br>${linkedin}</p>`;
         if (github) html += `<p><strong>GitHub</strong><br>${github}</p>`;
@@ -199,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Skills - com placeholder
         html += `<div class="ats-sidebar-section ${habilidadesTec.length === 0 ? 'placeholder' : ''}">
-            <h3>Skills</h3>`;
+            <h3>HABILIDADES TÉCNICAS</h3>`;
         
         if (habilidadesTec.length > 0) {
             html += `<ul>`;
@@ -214,7 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Core Competencies - com placeholder
         html += `<div class="ats-sidebar-section ${habilidadesSoft.length === 0 ? 'placeholder' : ''}">
-            <h3>Core Competencies</h3>`;
+            <h3>HABILIDADES PESSOAIS</h3>`;
         
         if (habilidadesSoft.length > 0) {
             html += `<ul>`;
@@ -229,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Languages - com placeholder
         html += `<div class="ats-sidebar-section ${idiomas.length === 0 ? 'placeholder' : ''}">
-            <h3>Languages</h3>`;
+            <h3>IDIOMAS</h3>`;
         
         if (idiomas.length > 0) {
             html += `<ul>`;
@@ -248,7 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Profile - com placeholder
         html += `<div class="ats-main-section ${!resumoProfissional ? 'placeholder' : ''}">
-            <h2>Profile</h2>`;
+            <h2>RESUMO PROFISSIONAL</h2>`;
         
         if (resumoProfissional) {
             html += `<p>${resumoProfissional}</p>`;
@@ -267,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const shouldShowExpPlaceholder = !temExperiencias && !hasAnyExpTmp;
 
         html += `<div class="ats-main-section ${shouldShowExpPlaceholder ? 'placeholder' : ''}">
-            <h2>Employment History</h2>`;
+            <h2>EXPERIÊNCIAS</h2>`;
         
         if (temExperiencias) {
             curriculo.experiencias.forEach(exp => {
@@ -313,7 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const shouldShowEduPlaceholder = !temEducacao && !hasAnyEduTmp;
 
         html += `<div class="ats-main-section ${shouldShowEduPlaceholder ? 'placeholder' : ''}">
-            <h2>Education</h2>`;
+            <h2>EDUCAÇÃO</h2>`;
         
         if (temEducacao) {
             curriculo.educacao.forEach(edu => {
@@ -352,7 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const shouldShowCertPlaceholder = !temCertificados && !hasAnyCertTmp;
 
         html += `<div class="ats-main-section ${shouldShowCertPlaceholder ? 'placeholder' : ''}">
-            <h2>Certifications</h2>`;
+            <h2>CERTIFICADOS</h2>`;
         
         if (temCertificados) {
             curriculo.certificados.forEach(cert => {
@@ -388,7 +439,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const shouldShowPalPlaceholder = !temPalestras && !hasAnyPalTmp;
 
         html += `<div class="ats-main-section ${shouldShowPalPlaceholder ? 'placeholder' : ''}">
-            <h2>Presentations</h2>`;
+            <h2>PALESTRAS E MINICURSOS</h2>`;
         
         if (temPalestras) {
             curriculo.palestras.forEach(palestra => {

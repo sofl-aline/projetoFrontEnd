@@ -26,55 +26,83 @@
         </div>
     </nav>
 
-    <!-- Cabeçalho da Página -->
-    <header class="site-header">
-        <div class="container">
-            <h1>Curriculum & README Generator</h1>
-            <p class="subtitle">Preencha o formulário e gere um README / currículo pronto para copiar ou baixar.</p>
+    <!-- Conteúdo Principal: Formulário + Preview -->
+    <main class="container-cv">
+        <!-- Formulário com Abas -->
+        <div class="form-content">
+            <!-- Sistema de Abas -->
+            <nav class="tabs">
+                <button class="tab active" data-tab="projeto">Projeto</button>
+                <button class="tab" data-tab="tecnologias">Tecnologias</button>
+                <button class="tab" data-tab="uso">Uso</button>
+            </nav>
+
+            <!-- Seção: Projeto -->
+            <section class="form-section" id="secaoProjeto">
+                <div class="form-group">
+                    <label>Título do Projeto</label>
+                    <input id="inputTitulo" type="text" placeholder="Meu Projeto Incrível">
+                </div>
+
+                <div class="form-group">
+                    <label>Descrição Curta</label>
+                    <input id="inputDescricaoCurta" type="text" placeholder="Uma breve descrição do projeto">
+                </div>
+
+                <div class="form-group">
+                    <label>Descrição Completa</label>
+                    <textarea id="inputDescricaoCompleta" rows="6" placeholder="Descreva seu projeto em detalhes..."></textarea>
+                </div>
+            </section>
+
+            <!-- Seção: Tecnologias -->
+            <section class="form-section" id="secaoTecnologias" style="display: none;">
+                <div class="form-group">
+                    <label>Tecnologias Usadas</label>
+                    <input id="inputTecnologias" type="text" placeholder="React, TypeScript, Node.js, MongoDB">
+                    <small>Separe as tecnologias por vírgula</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Licença</label>
+                    <select id="inputLicenca">
+                        <option value="">Selecione uma licença</option>
+                        <option value="MIT">MIT</option>
+                        <option value="Apache 2.0">Apache 2.0</option>
+                        <option value="GPL 3.0">GPL 3.0</option>
+                        <option value="BSD 3-Clause">BSD 3-Clause</option>
+                        <option value="ISC">ISC</option>
+                        <option value="Nenhuma">Nenhuma</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- Seção: Uso -->
+            <section class="form-section" id="secaoUso" style="display: none;">
+                <div class="form-group">
+                    <label>Como Instalar</label>
+                    <textarea id="inputComoInstalar" rows="4" placeholder="git clone https://github.com/usuario/projeto.git&#10;cd projeto&#10;npm install"></textarea>
+                    <small>Cada comando em uma nova linha</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Como Rodar o Projeto</label>
+                    <textarea id="inputComoRodar" rows="4" placeholder="npm start&#10;# ou&#10;npm run dev"></textarea>
+                    <small>Cada comando em uma nova linha</small>
+                </div>
+            </section>
         </div>
-    </header>
 
-    <!-- Grid Principal: Formulário + Preview -->
-    <main class="container main-grid">
-        <!-- Formulário (lado esquerdo) -->
-        <section class="card form-card" aria-labelledby="form-title">
-            <h2 id="form-title">Informações</h2>
-
-            <label>Nome completo
-                <input id="inputNome" type="text" placeholder="Seu nome completo">
-            </label>
-
-            <label>Título profissional
-                <input id="inputTitulo" type="text" placeholder="Ex: Desenvolvedor Front-end">
-            </label>
-
-            <label>Resumo / Sobre
-                <textarea id="inputResumo" rows="4" placeholder="Um resumo curto sobre você"></textarea>
-            </label>
-
-            <label>Habilidades (separe por vírgula)
-                <input id="inputHabilidades" type="text" placeholder="JavaScript, HTML, CSS">
-            </label>
-
-            <label>Contato (telefone / email)
-                <input id="inputContato" type="text" placeholder="ex: +55 11 99999-9999 / voce@exemplo.com">
-            </label>
-
-            <!-- Botões de Ação -->
-            <div class="actions">
-                <button id="btnGerar">Gerar Pré-visualização</button>
-                <button id="btnCopiar">Copiar README</button>
-                <button id="btnBaixar">Baixar README.md</button>
+        <!-- Preview do README -->
+        <div class="preview" id="previewArea">
+            <div class="preview-actions">
+                <button class="btn-primary" id="btnGerar">Gerar Pré-visualização</button>
+                <button class="btn-secondary" id="btnCopiar">Copiar README</button>
+                <button class="btn-secondary" id="btnBaixar">Baixar README.md</button>
             </div>
-        </section>
-
-        <!-- Preview / resultado (lado direito) -->
-        <aside class="card preview-card" aria-labelledby="preview-title">
-            <h2 id="preview-title">Pré-visualização (README)</h2>
-            <div id="previewArea" class="preview-area" tabindex="0">
-                <!-- conteúdo será criado dinamicamente -->
-            </div>
-        </aside>
+            <h2>Pré-visualização (README)</h2>
+            <div id="previewContent" class="preview-area"></div>
+        </div>
     </main>
 
     <!-- Rodapé -->
@@ -84,12 +112,14 @@
                 <a href="https://github.com/sofl-aline/projetoFrontEnd" target="_blank">GitHub: Jobly - gerador de currículo e README</a>
             </div>
             <div class="footer-rights">
-                © 2025 Jobly. Todos os direitos reservados.
+                2025 - Todos os direitos reservados.
             </div>
         </div>
     </footer>
 
-    <!-- Script JavaScript -->
+    <!-- Scripts JavaScript -->
+    <script src="js/tabs.js"></script>
     <script src="js/readme-generator.js"></script>
+    <script src="js/ui.js"></script>
 </body>
 </html>
