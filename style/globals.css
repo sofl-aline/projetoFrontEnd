@@ -6,15 +6,15 @@
 
 /* Variáveis CSS Globais */
 :root {
-    --primary: #0052ff;
+    --primary: #AD7FF5;
     --border: #e5e7eb;
-    --text: #111827;
-    --bg: #f9fafb;
+    --text: #30323D;
+    --bg: #F2F2FE;
     --radius: 8px;
-    --footer-bg: #1a1a1a;
+    --footer-bg: #3D2C56;
     --muted: #6b7280;
-    --accent: #2563eb;
-    --accent-2: #10b981;
+    --accent: #2BA3EE;
+    --accent-2: #AD7FF5;
 }
 
 /* Reset CSS básico */
@@ -40,7 +40,10 @@ html, body {
 /* Tipografia Base */
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
-    font-weight: 600;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 25.2px; /* 140% */
+
 }
 
 p {
