@@ -150,14 +150,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Atualiza o preview do currículo em tempo real
+     * Atualiza o preview do currículo em tempo real com layout ATS
+     */
+    /**
+     * Atualiza o preview do currículo em tempo real com layout ATS
      */
     function atualizarPreview() {
         const previewContent = document.getElementById('previewContent');
         if (!previewContent) return;
 
         // Coleta dados pessoais
-        const nome = document.getElementById('nome')?.value || 'Seu Nome';
+        const nome = document.getElementById('nome')?.value || 'SEU NOME';
         const cargo = document.getElementById('cargo')?.value || 'Seu Cargo';
         const email = document.getElementById('email')?.value || 'seu.email@exemplo.com';
         const telefone = document.getElementById('telefone')?.value || '(00) 00000-0000';
@@ -166,103 +169,254 @@ document.addEventListener('DOMContentLoaded', () => {
         const site = document.getElementById('site')?.value || '';
         const resumoProfissional = document.getElementById('resumoProfissional')?.value || '';
 
-        // Processa habilidades (separa por vírgula)
-        const habilidadesTec = document.getElementById('habilidadesTec')?.value
-            .split(',').map(h => h.trim()).filter(Boolean) || [];
-        const habilidadesSoft = document.getElementById('habilidadesSoft')?.value
-            .split(',').map(h => h.trim()).filter(Boolean) || [];
-        const idiomas = document.getElementById('idiomas')?.value
-            .split(',').map(i => i.trim()).filter(Boolean) || [];
+        // Processa habilidades
+        const habilidadesTec = (document.getElementById('habilidadesTec')?.value || '')
+            .split(',').map(h => h.trim()).filter(Boolean);
+        const habilidadesSoft = (document.getElementById('habilidadesSoft')?.value || '')
+            .split(',').map(h => h.trim()).filter(Boolean);
+        const idiomas = (document.getElementById('idiomas')?.value || '')
+            .split(',').map(i => i.trim()).filter(Boolean);
 
-        // Monta o HTML do preview
+        // Inicia estrutura ATS
         let html = `
-            <h2>${nome}</h2>
-            <h3>${cargo}</h3>
-            <p>📧 ${email}</p>
-            <p>📱 ${telefone}</p>
-            ${linkedin ? `<p>🔗 LinkedIn: ${linkedin}</p>` : ''}
-            ${github ? `<p>💻 GitHub: ${github}</p>` : ''}
-            ${site ? `<p>🌐 Site: ${site}</p>` : ''}
+            <h1>${nome.toUpperCase()}</h1>
+            <p class="subtitle">${cargo}</p>
+            
+            <div class="sidebar">
         `;
 
-        // Adiciona resumo profissional
+        // === SIDEBAR: DETAILS ===
+        html += `<div class="ats-sidebar-section">
+            <h3>Details</h3>
+            <p><strong>Email</strong><br>${email}</p>
+            <p><strong>Phone</strong><br>${telefone}</p>`;
+        
+        if (linkedin) html += `<p><strong>LinkedIn</strong><br>${linkedin}</p>`;
+        if (github) html += `<p><strong>GitHub</strong><br>${github}</p>`;
+        if (site) html += `<p><strong>Website</strong><br>${site}</p>`;
+        
+        html += `</div>`;
+
+        // Skills - com placeholder
+        html += `<div class="ats-sidebar-section ${habilidadesTec.length === 0 ? 'placeholder' : ''}">
+            <h3>Skills</h3>`;
+        
+        if (habilidadesTec.length > 0) {
+            html += `<ul>`;
+            habilidadesTec.forEach(skill => {
+                html += `<li>${skill}</li>`;
+            });
+            html += `</ul>`;
+        } else {
+            html += `<p class="placeholder-text">Suas habilidades técnicas aparecerão aqui</p>`;
+        }
+        html += `</div>`;
+
+        // Core Competencies - com placeholder
+        html += `<div class="ats-sidebar-section ${habilidadesSoft.length === 0 ? 'placeholder' : ''}">
+            <h3>Core Competencies</h3>`;
+        
+        if (habilidadesSoft.length > 0) {
+            html += `<ul>`;
+            habilidadesSoft.forEach(skill => {
+                html += `<li>${skill}</li>`;
+            });
+            html += `</ul>`;
+        } else {
+            html += `<p class="placeholder-text">Suas habilidades pessoais aparecerão aqui</p>`;
+        }
+        html += `</div>`;
+
+        // Languages - com placeholder
+        html += `<div class="ats-sidebar-section ${idiomas.length === 0 ? 'placeholder' : ''}">
+            <h3>Languages</h3>`;
+        
+        if (idiomas.length > 0) {
+            html += `<ul>`;
+            idiomas.forEach(lang => {
+                html += `<li>${lang}</li>`;
+            });
+            html += `</ul>`;
+        } else {
+            html += `<p class="placeholder-text">Seus idiomas aparecerão aqui</p>`;
+        }
+        html += `</div>`;
+
+        html += `</div><div class="main-content">`;
+
+        // === MAIN CONTENT ===
+
+        // Profile - com placeholder
+        html += `<div class="ats-main-section ${!resumoProfissional ? 'placeholder' : ''}">
+            <h2>Profile</h2>`;
+        
         if (resumoProfissional) {
+            html += `<p>${resumoProfissional}</p>`;
+        } else {
+            html += `<p class="placeholder-text">Seu resumo profissional aparecerá aqui</p>`;
+        }
+        html += `</div>`;
+
+        // Employment History - com placeholder
+        const empresaTmp = document.getElementById('empresa')?.value || '';
+        const cargoTmp = document.getElementById('cargoExp')?.value || '';
+        const periodoTmp = document.getElementById('periodo')?.value || '';
+        const descricaoTmp = document.getElementById('descricao')?.value || '';
+        const temExperiencias = curriculo.experiencias.length > 0;
+        const hasAnyExpTmp = empresaTmp || cargoTmp || periodoTmp || descricaoTmp;
+        const shouldShowExpPlaceholder = !temExperiencias && !hasAnyExpTmp;
+
+        html += `<div class="ats-main-section ${shouldShowExpPlaceholder ? 'placeholder' : ''}">
+            <h2>Employment History</h2>`;
+        
+        if (temExperiencias) {
+            curriculo.experiencias.forEach(exp => {
+                html += `
+                    <div class="ats-job-entry">
+                        <div class="ats-job-title">
+                            <h4>${exp.cargo}</h4>
+                        </div>
+                        <div class="ats-job-company">${exp.empresa}</div>
+                        <div class="ats-job-dates">${exp.periodo}</div>
+                        ${exp.descricao ? `<div class="ats-job-description">${exp.descricao}</div>` : ''}
+                    </div>
+                `;
+            });
+        }
+
+        if (hasAnyExpTmp) {
             html += `
-                <h3>Resumo Profissional</h3>
-                <p>${resumoProfissional}</p>
+                <div class="ats-job-entry temporary">
+                    <div class="ats-job-title">
+                        <h4>${cargoTmp || 'Job Title'}</h4>
+                    </div>
+                    <div class="ats-job-company">${empresaTmp || 'Company'}</div>
+                    <div class="ats-job-dates">${periodoTmp || 'Period'}</div>
+                    ${descricaoTmp ? `<div class="ats-job-description">${descricaoTmp}</div>` : ''}
+                </div>
             `;
         }
 
-        // Adiciona experiências profissionais
-        if (curriculo.experiencias.length > 0) {
-            html += '<h3>Experiência Profissional</h3>';
-            curriculo.experiencias.forEach(exp => {
-                html += `
-                    <div class="experiencia">
-                        <h4>${exp.cargo} - ${exp.empresa}</h4>
-                        <p>${exp.periodo}</p>
-                        ${exp.descricao ? `<p>${exp.descricao}</p>` : ''}
-                    </div>
-                `;
-            });
+        if (shouldShowExpPlaceholder) {
+            html += `<p class="placeholder-text">Suas experiências profissionais aparecerão aqui</p>`;
         }
 
-        // Adiciona formação acadêmica
-        if (curriculo.educacao.length > 0) {
-            html += '<h3>Formação Acadêmica</h3>';
+        html += `</div>`;
+
+        // Education - com placeholder
+        const instituicaoTmp = document.getElementById('instituicao')?.value || '';
+        const cursoTmp = document.getElementById('curso')?.value || '';
+        const periodoEduTmp = document.getElementById('periodoEdu')?.value || '';
+        const tipoEduTmp = document.getElementById('tipoEdu')?.value || 'Ensino Superior';
+        const temEducacao = curriculo.educacao.length > 0;
+        const hasAnyEduTmp = instituicaoTmp || cursoTmp || periodoEduTmp;
+        const shouldShowEduPlaceholder = !temEducacao && !hasAnyEduTmp;
+
+        html += `<div class="ats-main-section ${shouldShowEduPlaceholder ? 'placeholder' : ''}">
+            <h2>Education</h2>`;
+        
+        if (temEducacao) {
             curriculo.educacao.forEach(edu => {
                 html += `
-                    <div class="educacao">
-                        <h4>${edu.tipo} em ${edu.curso}</h4>
-                        <p>${edu.instituicao} - ${edu.periodo}</p>
+                    <div class="ats-education-entry">
+                        <h4>${edu.tipo} in ${edu.curso}</h4>
+                        <div class="ats-education-company">${edu.instituicao}</div>
+                        <div class="ats-education-location">${edu.periodo}</div>
                     </div>
                 `;
             });
         }
 
-        // Adiciona habilidades técnicas
-        if (habilidadesTec.length > 0) {
-            html += '<h3>Habilidades Técnicas</h3>';
-            html += '<p>' + habilidadesTec.join(', ') + '</p>';
+        if (hasAnyEduTmp) {
+            html += `
+                <div class="ats-education-entry temporary">
+                    <h4>${tipoEduTmp} in ${cursoTmp || 'Course'}</h4>
+                    <div class="ats-education-company">${instituicaoTmp || 'Institution'}</div>
+                    <div class="ats-education-location">${periodoEduTmp || 'Period'}</div>
+                </div>
+            `;
         }
 
-        // Adiciona habilidades pessoais
-        if (habilidadesSoft.length > 0) {
-            html += '<h3>Habilidades Pessoais</h3>';
-            html += '<p>' + habilidadesSoft.join(', ') + '</p>';
+        if (shouldShowEduPlaceholder) {
+            html += `<p class="placeholder-text">Sua formação acadêmica aparecerá aqui</p>`;
         }
 
-        // Adiciona idiomas
-        if (idiomas.length > 0) {
-            html += '<h3>Idiomas</h3>';
-            html += '<p>' + idiomas.join(', ') + '</p>';
-        }
+        html += `</div>`;
 
-        // Adiciona certificados
-        if (curriculo.certificados.length > 0) {
-            html += '<h3>Certificações</h3>';
+        // Certifications - com placeholder
+        const certTituloTmp = document.getElementById('certificadoTitulo')?.value || '';
+        const certInstTmp = document.getElementById('certificadoInstituicao')?.value || '';
+        const certAnoTmp = document.getElementById('certificadoAno')?.value || '';
+        const temCertificados = curriculo.certificados.length > 0;
+        const hasAnyCertTmp = certTituloTmp || certInstTmp || certAnoTmp;
+        const shouldShowCertPlaceholder = !temCertificados && !hasAnyCertTmp;
+
+        html += `<div class="ats-main-section ${shouldShowCertPlaceholder ? 'placeholder' : ''}">
+            <h2>Certifications</h2>`;
+        
+        if (temCertificados) {
             curriculo.certificados.forEach(cert => {
                 html += `
-                    <div class="certificado">
-                        <h4>${cert.titulo}</h4>
-                        <p>${cert.instituicao} - ${cert.ano}</p>
+                    <div class="ats-certificate-entry">
+                        <span class="ats-certificate-title">${cert.titulo}</span>
+                        <span class="ats-certificate-issuer">${cert.instituicao} — ${cert.ano}</span>
                     </div>
                 `;
             });
         }
 
-        // Adiciona palestras e minicursos
-        if (curriculo.palestras.length > 0) {
-            html += '<h3>Palestras e Minicursos</h3>';
+        if (hasAnyCertTmp) {
+            html += `
+                <div class="ats-certificate-entry temporary">
+                    <span class="ats-certificate-title">${certTituloTmp || 'Certificate Title'}</span>
+                    <span class="ats-certificate-issuer">${certInstTmp || 'Issuer'} ${certAnoTmp ? '— ' + certAnoTmp : ''}</span>
+                </div>
+            `;
+        }
+
+        if (shouldShowCertPlaceholder) {
+            html += `<p class="placeholder-text">Seus certificados aparecerão aqui</p>`;
+        }
+
+        html += `</div>`;
+
+        // Presentations - com placeholder
+        const palestraTituloTmp = document.getElementById('palestraTitulo')?.value || '';
+        const palestraInstTmp = document.getElementById('palestraInstituicao')?.value || '';
+        const temPalestras = curriculo.palestras.length > 0;
+        const hasAnyPalTmp = palestraTituloTmp || palestraInstTmp;
+        const shouldShowPalPlaceholder = !temPalestras && !hasAnyPalTmp;
+
+        html += `<div class="ats-main-section ${shouldShowPalPlaceholder ? 'placeholder' : ''}">
+            <h2>Presentations</h2>`;
+        
+        if (temPalestras) {
             curriculo.palestras.forEach(palestra => {
                 html += `
-                    <div class="palestra">
-                        <h4>${palestra.titulo}</h4>
-                        <p>${palestra.instituicao}</p>
+                    <div class="ats-certificate-entry">
+                        <span class="ats-certificate-title">${palestra.titulo}</span>
+                        <span class="ats-certificate-issuer">${palestra.instituicao}</span>
                     </div>
                 `;
             });
         }
+
+        if (hasAnyPalTmp) {
+            html += `
+                <div class="ats-certificate-entry temporary">
+                    <span class="ats-certificate-title">${palestraTituloTmp || 'Presentation Title'}</span>
+                    <span class="ats-certificate-issuer">${palestraInstTmp || 'Organization'}</span>
+                </div>
+            `;
+        }
+
+        if (shouldShowPalPlaceholder) {
+            html += `<p class="placeholder-text">Suas palestras e minicursos aparecerão aqui</p>`;
+        }
+
+        html += `</div>`;
+
+        html += `</div>`;
 
         // Atualiza o conteúdo do preview
         previewContent.innerHTML = html;

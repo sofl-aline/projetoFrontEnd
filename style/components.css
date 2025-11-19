@@ -307,6 +307,296 @@
     color: #111827;
 }
 
+/* Estilo para itens temporários (em edição, ainda não adicionados) */
+.preview-area .temporary {
+    opacity: 0.95;
+    font-style: italic;
+    border-left: 3px solid rgba(59, 130, 246, 0.12);
+    padding-left: 12px;
+    margin-bottom: 8px;
+}
+
+/* ========== LAYOUT ATS (APPLICANT TRACKING SYSTEM) ========== */
+#previewContent {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 30px;
+    padding: 30px;
+    background: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #1f2937;
+    max-height: 90vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#previewContent h1 {
+    grid-column: 1 / -1;
+    margin: 0 0 5px 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #111827;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+#previewContent > .subtitle {
+    grid-column: 1 / -1;
+    margin: 0 0 20px 0;
+    font-size: 12px;
+    color: #6b7280;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 20px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+#previewContent > .sidebar {
+    grid-column: 1;
+    min-width: 0;
+    overflow-y: auto;
+    max-height: calc(90vh - 120px);
+    padding-right: 12px;
+}
+
+#previewContent > .main-content {
+    grid-column: 2;
+    min-width: 0;
+    overflow-y: auto;
+    max-height: calc(90vh - 120px);
+    padding-right: 12px;
+}
+
+/* Seções da Sidebar */
+.ats-sidebar-section {
+    margin-bottom: 24px;
+}
+
+.ats-sidebar-section h3 {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #111827;
+    margin: 0 0 12px 0;
+    border-bottom: 2px solid #111827;
+    padding-bottom: 8px;
+    word-wrap: break-word;
+}
+
+.ats-sidebar-section p {
+    margin: 6px 0;
+    font-size: 13px;
+    color: #374151;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.ats-sidebar-section ul {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+.ats-sidebar-section li {
+    margin: 6px 0;
+    font-size: 13px;
+    color: #374151;
+    position: relative;
+    padding-left: 12px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.ats-sidebar-section li:before {
+    content: "▪";
+    position: absolute;
+    left: 0;
+    color: #111827;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+/* Seções do Main Content */
+.ats-main-section {
+    margin-bottom: 24px;
+}
+
+.ats-main-section h2 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #111827;
+    margin: 0 0 12px 0;
+    border-bottom: 2px solid #111827;
+    padding-bottom: 8px;
+    word-wrap: break-word;
+}
+
+.ats-job-entry,
+.ats-education-entry {
+    margin-bottom: 16px;
+    page-break-inside: avoid;
+    min-width: 0;
+}
+
+.ats-job-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+    min-width: 0;
+}
+
+.ats-job-title h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    min-width: 0;
+}
+
+.ats-job-location {
+    font-size: 12px;
+    color: #6b7280;
+    flex-shrink: 0;
+}
+
+.ats-job-company {
+    font-size: 12px;
+    font-weight: 500;
+    color: #374151;
+    margin: 4px 0 0 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.ats-job-dates {
+    font-size: 11px;
+    color: #6b7280;
+    margin: 2px 0 8px 0;
+    word-wrap: break-word;
+}
+
+.ats-job-description {
+    font-size: 13px;
+    color: #374151;
+    margin: 8px 0 0 0;
+    line-height: 1.6;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.ats-job-description ul {
+    margin: 6px 0 0 0;
+    padding-left: 20px;
+    list-style-type: disc;
+}
+
+.ats-job-description li {
+    margin: 4px 0;
+    font-size: 12px;
+    color: #374151;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.ats-education-entry h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.ats-education-degree {
+    font-size: 12px;
+    color: #6b7280;
+    margin: 4px 0 0 0;
+    word-wrap: break-word;
+}
+
+.ats-education-location {
+    font-size: 11px;
+    color: #6b7280;
+    display: block;
+    margin-top: 2px;
+    word-wrap: break-word;
+}
+
+.ats-certificate-entry {
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: #374151;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.ats-certificate-title {
+    font-weight: 500;
+    color: #111827;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.ats-certificate-issuer {
+    font-size: 12px;
+    color: #6b7280;
+    display: block;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 1024px) {
+    #previewContent {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 20px;
+    }
+
+    #previewContent > .sidebar {
+        grid-column: 1;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    #previewContent > .main-content {
+        grid-column: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    #previewContent {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 16px;
+        font-size: 12px;
+    }
+
+    #previewContent h1 {
+        font-size: 22px;
+    }
+
+    #previewContent > .sidebar {
+        grid-template-columns: 1fr;
+    }
+}
+
 .preview-area ul {
     margin: 8px 0 0;
     padding-left: 20px;
