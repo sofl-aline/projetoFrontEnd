@@ -187,9 +187,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // === SIDEBAR: DETAILS ===
         html += `<div class="ats-sidebar-section">
-            <h3>Details</h3>
+            <h3>DETALHES</h3>
             <p><strong>Email</strong><br>${email}</p>
-            <p><strong>Phone</strong><br>${telefone}</p>`;
+            <p><strong>Telefone</strong><br>${telefone}</p>`;
         
         if (linkedin) html += `<p><strong>LinkedIn</strong><br>${linkedin}</p>`;
         if (github) html += `<p><strong>GitHub</strong><br>${github}</p>`;
@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Skills - com placeholder
         html += `<div class="ats-sidebar-section ${habilidadesTec.length === 0 ? 'placeholder' : ''}">
-            <h3>Skills</h3>`;
+            <h3>HABILIDADES TÉCNICAS</h3>`;
         
         if (habilidadesTec.length > 0) {
             html += `<ul>`;
@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Core Competencies - com placeholder
         html += `<div class="ats-sidebar-section ${habilidadesSoft.length === 0 ? 'placeholder' : ''}">
-            <h3>Core Competencies</h3>`;
+            <h3>HABILIDADES PESSOAIS</h3>`;
         
         if (habilidadesSoft.length > 0) {
             html += `<ul>`;
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Languages - com placeholder
         html += `<div class="ats-sidebar-section ${idiomas.length === 0 ? 'placeholder' : ''}">
-            <h3>Languages</h3>`;
+            <h3>IDIOMAS</h3>`;
         
         if (idiomas.length > 0) {
             html += `<ul>`;
@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Profile - com placeholder
         html += `<div class="ats-main-section ${!resumoProfissional ? 'placeholder' : ''}">
-            <h2>Profile</h2>`;
+            <h2>RESUMO PROFISSIONAL</h2>`;
         
         if (resumoProfissional) {
             html += `<p>${resumoProfissional}</p>`;
@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const shouldShowExpPlaceholder = !temExperiencias && !hasAnyExpTmp;
 
         html += `<div class="ats-main-section ${shouldShowExpPlaceholder ? 'placeholder' : ''}">
-            <h2>Employment History</h2>`;
+            <h2>EXPERIÊNCIAS</h2>`;
         
         if (temExperiencias) {
             curriculo.experiencias.forEach(exp => {
@@ -313,7 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const shouldShowEduPlaceholder = !temEducacao && !hasAnyEduTmp;
 
         html += `<div class="ats-main-section ${shouldShowEduPlaceholder ? 'placeholder' : ''}">
-            <h2>Education</h2>`;
+            <h2>EDUCAÇÃO</h2>`;
         
         if (temEducacao) {
             curriculo.educacao.forEach(edu => {
@@ -352,7 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const shouldShowCertPlaceholder = !temCertificados && !hasAnyCertTmp;
 
         html += `<div class="ats-main-section ${shouldShowCertPlaceholder ? 'placeholder' : ''}">
-            <h2>Certifications</h2>`;
+            <h2>CERTIFICADOS</h2>`;
         
         if (temCertificados) {
             curriculo.certificados.forEach(cert => {
@@ -388,7 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const shouldShowPalPlaceholder = !temPalestras && !hasAnyPalTmp;
 
         html += `<div class="ats-main-section ${shouldShowPalPlaceholder ? 'placeholder' : ''}">
-            <h2>Presentations</h2>`;
+            <h2>PALESTRAS E MINICURSOS</h2>`;
         
         if (temPalestras) {
             curriculo.palestras.forEach(palestra => {
