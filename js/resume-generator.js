@@ -41,9 +41,60 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     if (btnGerar) {
-        btnGerar.addEventListener('click', () => {
-            alert('Função de gerar PDF será implementada!');
-        });
+        btnGerar.addEventListener('click', gerarPDF);
+    }
+
+    /**
+     * Gera e baixa o PDF a partir do conteúdo de `#previewContent`.
+     * Usa a biblioteca html2pdf (inserida em curriculum_cv.html).
+     */
+    function gerarPDF() {
+        const preview = document.getElementById('previewContent');
+        if (!preview) {
+            alert('Área de preview não encontrada. Atualize a página e tente novamente.');
+            return;
+        }
+
+        // Nome do arquivo baseado no nome do usuário
+        const nome = (document.getElementById('nome')?.value || 'meu-curriculo')
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[^a-z0-9-]/g, '');
+        const fileName = `${nome || 'curriculo'}.pdf`;
+
+        // Opções recomendadas para A4
+        const opt = {
+            margin:       0.5,
+            filename:     fileName,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true },
+            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
+
+        try {
+            // Clonar o elemento para evitar alterações de DOM durante a renderização
+            const clone = preview.cloneNode(true);
+
+            // Criar um container temporário fora da tela para garantir estilos aplicados
+            const wrapper = document.createElement('div');
+            wrapper.style.position = 'fixed';
+            wrapper.style.left = '-9999px';
+            wrapper.appendChild(clone);
+            document.body.appendChild(wrapper);
+
+            // Gera o PDF e remove o wrapper quando concluído
+            window.html2pdf().set(opt).from(clone).save().then(() => {
+                document.body.removeChild(wrapper);
+            }).catch(err => {
+                document.body.removeChild(wrapper);
+                console.error('Erro ao gerar PDF:', err);
+                alert('Ocorreu um erro ao gerar o PDF. Veja o console para detalhes.');
+            });
+        } catch (e) {
+            console.error(e);
+            alert('Ocorreu um erro ao gerar o PDF. Atualize a página e tente novamente.');
+        }
     }
 
     /**
