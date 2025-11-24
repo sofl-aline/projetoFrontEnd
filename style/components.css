@@ -649,11 +649,13 @@
 }
 
 /* ========== RODAPÉ ========== */
+/* Ajuste do footer: usa margin-top:auto em layout flex para ficar na base da tela
+   e mantém espaçamento quando o conteúdo for maior que a viewport */
 footer {
     background: var(--footer-bg);
     color: white;
     padding: 2rem;
-    margin-top: 4rem;
+    margin-top: auto; /* empurra o footer para o final em body flex */
 }
 
 .footer-container {
@@ -708,5 +710,10 @@ footer {
     .footer-contact {
         flex-direction: column;
         gap: 0.5rem;
+    }
+    
+    /* Ajuste de padding do footer em telas menores */
+    footer {
+        padding: 1.5rem;
     }
 }
