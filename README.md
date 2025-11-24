@@ -32,8 +32,8 @@ DevDocs é uma aplicação web que permite aos usuários criar:
 /project
 │
 ├── index.html              # Página inicial
-├── curriculum_cv.html      # Gerador de currículo
-├── curriculum.html         # Gerador de README
+├── curriculo.html         # Gerador de currículo
+├── readme.html             # Gerador de README
 │
 ├── style/                  # Arquivos CSS organizados
 │   ├── globals.css         # Estilos globais e variáveis
@@ -287,7 +287,7 @@ Substitua seus arquivos HTML pelos fornecidos acima, garantindo que os caminhos 
 ## 🔍 Como Cada Parte Funciona
 
 ### Fluxo do Gerador de Currículo
-Usuário acessa curriculum_cv.html
+Usuário acessa curriculo.html
 ↓
 tabs.js inicializa o sistema de abas
 ↓
@@ -314,7 +314,7 @@ Usuário repete processo para outras seções
 Clica em "Gerar Currículo" para exportar (PDF - a implementar)
 
 ### Fluxo do Gerador de README
-Usuário acessa curriculum.html
+Usuário acessa readme.html
 ↓
 readme-generator.js inicializa
 ↓
