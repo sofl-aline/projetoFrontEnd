@@ -394,7 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
             curriculo.educacao.forEach(edu => {
                 html += `
                     <div class="ats-education-entry">
-                        <h4>${edu.tipo} in ${edu.curso}</h4>
+                        <h4>${edu.tipo} em ${edu.curso}</h4>
                         <div class="ats-education-company">${edu.instituicao}</div>
                         <div class="ats-education-location">${edu.periodo}</div>
                     </div>
