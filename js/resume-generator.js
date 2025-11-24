@@ -76,16 +76,40 @@ document.addEventListener('DOMContentLoaded', () => {
             // Clonar o elemento para evitar alterações de DOM durante a renderização
             const clone = preview.cloneNode(true);
 
+            // Remover restrições de altura para capturar todo o conteúdo
+            clone.style.maxHeight = 'none';
+            clone.style.overflow = 'visible';
+            clone.style.height = 'auto';
+
+            // Remover restrições de altura do sidebar e main-content
+            const sidebar = clone.querySelector('.sidebar');
+            const mainContent = clone.querySelector('.main-content');
+            
+            if (sidebar) {
+                sidebar.style.maxHeight = 'none';
+                sidebar.style.overflow = 'visible';
+                sidebar.style.height = 'auto';
+            }
+            
+            if (mainContent) {
+                mainContent.style.maxHeight = 'none';
+                mainContent.style.overflow = 'visible';
+                mainContent.style.height = 'auto';
+            }
+
             // Criar um container temporário fora da tela para garantir estilos aplicados
             const wrapper = document.createElement('div');
             wrapper.style.position = 'fixed';
             wrapper.style.left = '-9999px';
+            wrapper.style.width = '210mm'; // Largura A4 para melhor renderização
+            wrapper.style.minHeight = 'auto';
             wrapper.appendChild(clone);
             document.body.appendChild(wrapper);
 
             // Gera o PDF e remove o wrapper quando concluído
             window.html2pdf().set(opt).from(clone).save().then(() => {
                 document.body.removeChild(wrapper);
+                alert('Currículo gerado com sucesso!');
             }).catch(err => {
                 document.body.removeChild(wrapper);
                 console.error('Erro ao gerar PDF:', err);
