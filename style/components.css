@@ -226,27 +226,41 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 12px;
+    gap: 8px;
     background: #fff;
-    padding: 8px 0;
+    padding: 8px 8px;
     border-radius: var(--radius);
     margin-bottom: 24px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+    scrollbar-width: thin;
 }
 
 .tabs::-webkit-scrollbar {
-    display: none;
+    height: 6px;
+}
+
+.tabs::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.tabs::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.tabs::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 .tab {
-    padding: 10px 20px;
+    padding: 8px 16px;
     border: none;
     background: none;
     border-radius: var(--radius);
     cursor: pointer;
-    font-size: 15px;
+    font-size: 14px;
     text-align: center;
     white-space: nowrap;
     transition: all 0.3s ease;
