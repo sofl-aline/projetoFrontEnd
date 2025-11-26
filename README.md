@@ -4,7 +4,7 @@
 
 ## 🎯 Sobre o Projeto
 
-DevDocs é uma aplicação web que permite aos usuários criar:
+Jobly é uma aplicação web que permite aos usuários criar:
 - **Currículos profissionais** formatados e prontos para exportação
 - **Arquivos README.md** para projetos no GitHub
 

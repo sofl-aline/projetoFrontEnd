@@ -6,7 +6,7 @@
 
 // Aguarda o carregamento completo do DOM
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 Aplicação DevDocs iniciada!');
+    console.log('🚀 Aplicação Jobly iniciada!');
     
     // Identifica qual página está carregada
     const paginaAtual = window.location.pathname.split('/').pop();
