@@ -357,7 +357,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <h2>RESUMO PROFISSIONAL</h2>`;
         
         if (resumoProfissional) {
-            html += `<p>${resumoProfissional}</p>`;
+            const resumoComQuebraLinha = resumoProfissional.replace(/\n/g, '<br>');
+            html += `<p>${resumoComQuebraLinha}</p>`;
         } else {
             html += `<p class="placeholder-text">Seu resumo profissional aparecerá aqui</p>`;
         }

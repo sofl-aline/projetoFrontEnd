@@ -18,7 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Atualiza preview em tempo real ao digitar
     const campos = [
         'inputTitulo', 'inputDescricaoCurta', 'inputDescricaoCompleta',
-        'inputTecnologias', 'inputLicenca', 'inputComoInstalar', 'inputComoRodar'
+        'inputFuncionalidades', 'inputEstruturaProjeto',
+        'inputTecnologias', 'inputLicenca', 'inputComoInstalar', 'inputComoRodar',
+        'inputMelhorias', 'inputNomeAutor', 'inputEmailAutor', 'inputGithubAutor', 'inputLinkedinAutor', 'inputPortfolioAutor'
     ];
     
     campos.forEach(id => {
@@ -42,14 +44,32 @@ function montarREADME() {
     const titulo = document.getElementById('inputTitulo')?.value.trim() || '';
     const descricaoCurta = document.getElementById('inputDescricaoCurta')?.value.trim() || '';
     const descricaoCompleta = document.getElementById('inputDescricaoCompleta')?.value.trim() || '';
+    const funcionalidades = document.getElementById('inputFuncionalidades')?.value.trim() || '';
+    const estruturaProjeto = document.getElementById('inputEstruturaProjeto')?.value.trim() || '';
     const tecnologias = document.getElementById('inputTecnologias')?.value.trim() || '';
     const licenca = document.getElementById('inputLicenca')?.value.trim() || '';
     const comoInstalar = document.getElementById('inputComoInstalar')?.value.trim() || '';
     const comoRodar = document.getElementById('inputComoRodar')?.value.trim() || '';
+    const melhorias = document.getElementById('inputMelhorias')?.value.trim() || '';
+    const nomeAutor = document.getElementById('inputNomeAutor')?.value.trim() || '';
+    const emailAutor = document.getElementById('inputEmailAutor')?.value.trim() || '';
+    const githubAutor = document.getElementById('inputGithubAutor')?.value.trim() || '';
+    const linkedinAutor = document.getElementById('inputLinkedinAutor')?.value.trim() || '';
+    const portfolioAutor = document.getElementById('inputPortfolioAutor')?.value.trim() || '';
 
     // Processa tecnologias (separa por vírgula e remove espaços)
     const tecnologiasArray = tecnologias 
         ? tecnologias.split(',').map(s => s.trim()).filter(Boolean) 
+        : [];
+
+    // Processa funcionalidades (separa por quebra de linha)
+    const funcionalidadesArray = funcionalidades
+        ? funcionalidades.split('\n').map(s => s.trim()).filter(Boolean)
+        : [];
+
+    // Processa melhorias (separa por quebra de linha)
+    const melhoriaArray = melhorias
+        ? melhorias.split('\n').map(s => s.trim()).filter(Boolean)
         : [];
 
     // Gera markdown estruturado
@@ -63,6 +83,18 @@ function montarREADME() {
     
     // Adiciona descrição completa
     if (descricaoCompleta) md += `## 📋 Descrição\n\n${descricaoCompleta}\n\n`;
+    
+    // Adiciona seção de funcionalidades
+    if (funcionalidadesArray.length) {
+        md += `## ✨ Funcionalidades\n\n`;
+        funcionalidadesArray.forEach(f => md += `- ${f}\n`);
+        md += `\n`;
+    }
+    
+    // Adiciona seção de estrutura do projeto
+    if (estruturaProjeto) {
+        md += `## 📁 Estrutura do Projeto\n\n\`\`\`\n${estruturaProjeto}\n\`\`\`\n\n`;
+    }
     
     // Adiciona seção de tecnologias
     if (tecnologiasArray.length) {
@@ -79,6 +111,29 @@ function montarREADME() {
     // Adiciona seção de como rodar
     if (comoRodar) {
         md += `## 🚀 Como Rodar\n\n\`\`\`bash\n${comoRodar}\n\`\`\`\n\n`;
+    }
+    
+    // Adiciona seção de melhorias futuras
+    if (melhoriaArray.length) {
+        md += `## 🔮 Melhorias Futuras\n\n`;
+        melhoriaArray.forEach(m => md += `- ${m}\n`);
+        md += `\n`;
+    }
+    
+    // Adiciona seção de autor
+    if (nomeAutor || emailAutor || githubAutor || linkedinAutor || portfolioAutor) {
+        md += `## 👨‍💻 Autor\n\n`;
+        if (nomeAutor) md += `**${nomeAutor}**\n\n`;
+        
+        const links = [];
+        if (emailAutor) links.push(`📧 [Email](mailto:${emailAutor})`);
+        if (githubAutor) links.push(`🐙 [GitHub](${githubAutor})`);
+        if (linkedinAutor) links.push(`💼 [LinkedIn](${linkedinAutor})`);
+        if (portfolioAutor) links.push(`🌐 [Portfólio](${portfolioAutor})`);
+        
+        if (links.length) {
+            md += links.join(' | ') + '\n\n';
+        }
     }
     
     // Adiciona licença

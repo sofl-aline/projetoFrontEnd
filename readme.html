@@ -35,6 +35,8 @@
                 <button class="tab active" data-tab="projeto">Projeto</button>
                 <button class="tab" data-tab="tecnologias">Tecnologias</button>
                 <button class="tab" data-tab="uso">Uso</button>
+                <button class="tab" data-tab="melhorias">Melhorias Futuras</button>
+                <button class="tab" data-tab="autor">Autor</button>
             </nav>
 
             <!-- Seção: Projeto -->
@@ -52,6 +54,18 @@
                 <div class="form-group">
                     <label>Descrição Completa</label>
                     <textarea id="inputDescricaoCompleta" rows="6" placeholder="Descreva seu projeto em detalhes..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Funcionalidades</label>
+                    <textarea id="inputFuncionalidades" rows="4" placeholder="- Autenticação de usuários&#10;- Dashboard interativo&#10;- Exportação de dados"></textarea>
+                    <small>Liste as funcionalidades principais, uma por linha</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Estrutura do Projeto</label>
+                    <textarea id="inputEstruturaProjeto" rows="4" placeholder="src/&#10;├── components/&#10;├── pages/&#10;├── utils/&#10;└── styles/"></textarea>
+                    <small>Descreva a estrutura de diretórios do projeto</small>
                 </div>
             </section>
 
@@ -89,6 +103,43 @@
                     <label>Como Rodar o Projeto</label>
                     <textarea id="inputComoRodar" rows="4" placeholder="npm start&#10;# ou&#10;npm run dev"></textarea>
                     <small>Cada comando em uma nova linha</small>
+                </div>
+            </section>
+
+            <!-- Seção: Melhorias Futuras -->
+            <section class="form-section" id="secaoMelhorias" style="display: none;">
+                <div class="form-group">
+                    <label>Melhorias Planejadas</label>
+                    <textarea id="inputMelhorias" rows="5" placeholder="- Melhorar performance&#10;- Adicionar testes automatizados&#10;- Implementar modo dark&#10;- Otimizar banco de dados"></textarea>
+                    <small>Liste as melhorias planejadas para o futuro, uma por linha</small>
+                </div>
+            </section>
+
+            <!-- Seção: Autor -->
+            <section class="form-section" id="secaoAutor" style="display: none;">
+                <div class="form-group">
+                    <label>Nome do Autor</label>
+                    <input id="inputNomeAutor" type="text" placeholder="João Silva">
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input id="inputEmailAutor" type="email" placeholder="joao@exemplo.com">
+                </div>
+
+                <div class="form-group">
+                    <label>GitHub</label>
+                    <input id="inputGithubAutor" type="text" placeholder="https://github.com/usuario">
+                </div>
+
+                <div class="form-group">
+                    <label>LinkedIn</label>
+                    <input id="inputLinkedinAutor" type="text" placeholder="https://linkedin.com/in/usuario">
+                </div>
+
+                <div class="form-group">
+                    <label>Portfólio/Website</label>
+                    <input id="inputPortfolioAutor" type="text" placeholder="https://meuportfolio.com">
                 </div>
             </section>
         </div>
