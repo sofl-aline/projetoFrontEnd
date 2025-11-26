@@ -45,8 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Gera e baixa o PDF a partir do conteúdo de `#previewContent`.
-     * Usa a biblioteca html2pdf (inserida em curriculum_cv.html).
+    * Gera e baixa o PDF a partir do conteúdo de `#previewContent`.
+    * Usa a biblioteca html2pdf (inserida em curriculo.html).
      */
     function gerarPDF() {
         const preview = document.getElementById('previewContent');

@@ -22,12 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function inicializarPagina(pagina) {
     switch(pagina) {
-        case 'curriculum_cv.html':
+        case 'curriculo.html':
             console.log('✅ Inicializando gerador de currículo...');
             // Lógica específica do currículo será gerenciada por resume-generator.js
             break;
             
-        case 'curriculum.html':
+        case 'readme.html':
             console.log('✅ Inicializando gerador de README...');
             // Lógica específica do README será gerenciada por readme-generator.js
             break;
