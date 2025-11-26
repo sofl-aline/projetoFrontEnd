@@ -377,6 +377,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (temExperiencias) {
             curriculo.experiencias.forEach(exp => {
+                // Converte quebras de linha em <br> para exibição no preview
+                const descricaoFormatada = exp.descricao ? exp.descricao.replace(/\n/g, '<br>') : '';
                 html += `
                     <div class="ats-job-entry" data-exp-id="${exp.id}">
                         <div class="ats-job-title">
@@ -385,13 +387,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         <div class="ats-job-company">${exp.empresa}</div>
                         <div class="ats-job-dates">${exp.periodo}</div>
-                        ${exp.descricao ? `<div class="ats-job-description">${exp.descricao}</div>` : ''}
+                        ${exp.descricao ? `<div class="ats-job-description">${descricaoFormatada}</div>` : ''}
                     </div>
                 `;
             });
         }
 
         if (hasAnyExpTmp) {
+            // Converte quebras de linha em <br> para exibição no preview
+            const descricaoTmpFormatada = descricaoTmp ? descricaoTmp.replace(/\n/g, '<br>') : '';
             html += `
                 <div class="ats-job-entry temporary">
                     <div class="ats-job-title">
@@ -399,7 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <div class="ats-job-company">${empresaTmp || 'Company'}</div>
                     <div class="ats-job-dates">${periodoTmp || 'Period'}</div>
-                    ${descricaoTmp ? `<div class="ats-job-description">${descricaoTmp}</div>` : ''}
+                    ${descricaoTmp ? `<div class="ats-job-description">${descricaoTmpFormatada}</div>` : ''}
                 </div>
             `;
         }

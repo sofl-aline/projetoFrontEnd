@@ -525,6 +525,8 @@
     word-wrap: break-word;
     overflow-wrap: break-word;
     word-break: break-word;
+    white-space: pre-wrap;
+    word-spacing: normal;
 }
 
 .ats-job-description ul {
