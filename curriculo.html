@@ -10,6 +10,37 @@
     <link rel="stylesheet" href="style/layout.css">
     <link rel="stylesheet" href="style/components.css">
     <link rel="stylesheet" href="style/themes.css">
+    <style>
+        /* Estilos para botões de edição que não aparecem no PDF */
+        .btn-edit-item {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 4px 8px;
+            margin-left: 10px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            display: inline-block;
+        }
+        
+        .btn-edit-item:hover {
+            background-color: #e8e8e8;
+            color: #333;
+        }
+        
+        .btn-edit-item:active {
+            transform: scale(0.95);
+        }
+        
+        /* Ocultar botões de edição na impressão/PDF */
+        @media print {
+            .btn-edit-item {
+                display: none !important;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Menu de Navegação -->
@@ -200,5 +231,14 @@
     <script src="js/tabs.js"></script>
     <script src="js/resume-generator.js"></script>
     <script src="js/ui.js"></script>
+    
+    <!-- Script para expor funções de edição globalmente -->
+    <script>
+        // Aguarda carregamento do resume-generator.js
+        setTimeout(() => {
+            // Funções serão chamadas pelo onclick dos botões do preview
+            // Elas já estão disponíveis no escopo global via resume-generator.js
+        }, 100);
+    </script>
 </body>
 </html>

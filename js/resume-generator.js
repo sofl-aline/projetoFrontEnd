@@ -4,17 +4,21 @@
  * Gerencia a criação, preview e exportação de currículos
  */
 
+// Estado global do currículo - armazena todos os dados inseridos
+let curriculo = {
+    experiencias: [],
+    educacao: [],
+    habilidadesTec: [],
+    habilidadesSoft: [],
+    idiomas: [],
+    certificados: [],
+    palestras: []
+};
+
+// Função para atualizar preview (será definida dentro do DOMContentLoaded)
+let atualizarPreview = null;
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Estado global do currículo - armazena todos os dados inseridos
-    const curriculo = {
-        experiencias: [],
-        educacao: [],
-        habilidadesTec: [],
-        habilidadesSoft: [],
-        idiomas: [],
-        certificados: [],
-        palestras: []
-    };
 
     // Referências aos botões de ação
     const btnAddExperiencia = document.getElementById('btnAddExperiencia');
@@ -132,14 +136,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Valida se os campos obrigatórios foram preenchidos
         if (empresa && cargo && periodo) {
-            // Adiciona experiência ao array
-            curriculo.experiencias.push({ empresa, cargo, periodo, descricao });
+            // Adiciona experiência ao array com um ID único
+            const id = Date.now();
+            curriculo.experiencias.push({ id, empresa, cargo, periodo, descricao });
             
             // Limpa os campos do formulário
             ['empresa', 'cargoExp', 'periodo', 'descricao'].forEach(id => {
                 const campo = document.getElementById(id);
                 if (campo) campo.value = '';
             });
+            
+            // Remove indicador de edição se houver
+            document.getElementById('experienciaEditandoId')?.remove();
             
             // Atualiza o preview
             atualizarPreview();
@@ -150,6 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Por favor, preencha todos os campos obrigatórios.');
         }
     }
+
+
 
     /**
      * Adiciona uma nova formação educacional ao currículo
@@ -162,7 +172,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Valida campos obrigatórios
         if (instituicao && curso && periodo) {
-            curriculo.educacao.push({ instituicao, curso, periodo, tipo });
+            // Adiciona educação ao array com um ID único
+            const id = Date.now();
+            curriculo.educacao.push({ id, instituicao, curso, periodo, tipo });
             
             // Limpa campos
             ['instituicao', 'curso', 'periodoEdu'].forEach(id => {
@@ -170,12 +182,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (campo) campo.value = '';
             });
             
+            // Remove indicador de edição se houver
+            document.getElementById('educacaoEditandoId')?.remove();
+            
             atualizarPreview();
             alert('Formação adicionada com sucesso!');
         } else {
             alert('Por favor, preencha todos os campos obrigatórios.');
         }
     }
+
+
 
     /**
      * Adiciona um novo certificado ao currículo
@@ -186,7 +203,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const ano = document.getElementById('certificadoAno').value;
 
         if (titulo && instituicao && ano) {
-            curriculo.certificados.push({ titulo, instituicao, ano });
+            // Adiciona certificado ao array com um ID único
+            const id = Date.now();
+            curriculo.certificados.push({ id, titulo, instituicao, ano });
             
             // Limpa campos
             ['certificadoTitulo', 'certificadoInstituicao', 'certificadoAno'].forEach(id => {
@@ -194,12 +213,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (campo) campo.value = '';
             });
             
+            // Remove indicador de edição se houver
+            document.getElementById('certificadoEditandoId')?.remove();
+            
             atualizarPreview();
             alert('Certificado adicionado com sucesso!');
         } else {
             alert('Por favor, preencha todos os campos obrigatórios.');
         }
     }
+
+
 
     /**
      * Adiciona uma nova palestra/minicurso ao currículo
@@ -209,7 +233,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const instituicao = document.getElementById('palestraInstituicao').value;
 
         if (titulo && instituicao) {
-            curriculo.palestras.push({ titulo, instituicao });
+            // Adiciona palestra ao array com um ID único
+            const id = Date.now();
+            curriculo.palestras.push({ id, titulo, instituicao });
             
             // Limpa campos
             ['palestraTitulo', 'palestraInstituicao'].forEach(id => {
@@ -217,12 +243,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (campo) campo.value = '';
             });
             
+            // Remove indicador de edição se houver
+            document.getElementById('palestraEditandoId')?.remove();
+            
             atualizarPreview();
             alert('Palestra/Minicurso adicionado com sucesso!');
         } else {
             alert('Por favor, preencha todos os campos obrigatórios.');
         }
     }
+
+
 
     /**
      * Atualiza o preview do currículo em tempo real com layout ATS
@@ -347,9 +378,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (temExperiencias) {
             curriculo.experiencias.forEach(exp => {
                 html += `
-                    <div class="ats-job-entry">
+                    <div class="ats-job-entry" data-exp-id="${exp.id}">
                         <div class="ats-job-title">
                             <h4>${exp.cargo}</h4>
+                            <button type="button" class="btn-edit-item" onclick="editarExperiencia(${exp.id})">✏️ Editar</button>
                         </div>
                         <div class="ats-job-company">${exp.empresa}</div>
                         <div class="ats-job-dates">${exp.periodo}</div>
@@ -393,10 +425,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (temEducacao) {
             curriculo.educacao.forEach(edu => {
                 html += `
-                    <div class="ats-education-entry">
+                    <div class="ats-education-entry" data-edu-id="${edu.id}">
                         <h4>${edu.tipo} em ${edu.curso}</h4>
                         <div class="ats-education-company">${edu.instituicao}</div>
                         <div class="ats-education-location">${edu.periodo}</div>
+                        <button type="button" class="btn-edit-item" onclick="editarEducacao(${edu.id})">✏️ Editar</button>
                     </div>
                 `;
             });
@@ -432,9 +465,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (temCertificados) {
             curriculo.certificados.forEach(cert => {
                 html += `
-                    <div class="ats-certificate-entry">
+                    <div class="ats-certificate-entry" data-cert-id="${cert.id}">
                         <span class="ats-certificate-title">${cert.titulo}</span>
                         <span class="ats-certificate-issuer">${cert.instituicao} — ${cert.ano}</span>
+                        <button type="button" class="btn-edit-item" onclick="editarCertificado(${cert.id})">✏️ Editar</button>
                     </div>
                 `;
             });
@@ -468,9 +502,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (temPalestras) {
             curriculo.palestras.forEach(palestra => {
                 html += `
-                    <div class="ats-certificate-entry">
+                    <div class="ats-certificate-entry" data-pal-id="${palestra.id}">
                         <span class="ats-certificate-title">${palestra.titulo}</span>
                         <span class="ats-certificate-issuer">${palestra.instituicao}</span>
+                        <button type="button" class="btn-edit-item" onclick="editarPalestra(${palestra.id})">✏️ Editar</button>
                     </div>
                 `;
             });
@@ -497,6 +532,9 @@ document.addEventListener('DOMContentLoaded', () => {
         previewContent.innerHTML = html;
     }
 
+    // Atribui a função atualizarPreview ao escopo global
+    window.atualizarPreviewGlobal = atualizarPreview;
+    
     // Preview em tempo real - atualiza ao digitar
     const inputs = document.querySelectorAll('input, textarea, select');
     inputs.forEach(input => {
@@ -506,3 +544,89 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializa o preview vazio
     atualizarPreview();
 });
+
+/**
+ * Carrega uma experiência para edição (FUNÇÃO GLOBAL)
+ */
+window.editarExperiencia = function(id) {
+    const exp = curriculo.experiencias.find(e => e.id === id);
+    if (exp) {
+        document.getElementById('empresa').value = exp.empresa;
+        document.getElementById('cargoExp').value = exp.cargo;
+        document.getElementById('periodo').value = exp.periodo;
+        document.getElementById('descricao').value = exp.descricao;
+        
+        // Remove a experiência do array para edição
+        curriculo.experiencias = curriculo.experiencias.filter(e => e.id !== id);
+        
+        // Atualiza o preview
+        if (window.atualizarPreviewGlobal) {
+            window.atualizarPreviewGlobal();
+        }
+        
+        alert('Experiência carregada para edição. Modifique os campos e clique em "+ Adicionar Experiência" novamente.');
+    }
+};
+
+/**
+ * Carrega uma formação para edição (FUNÇÃO GLOBAL)
+ */
+window.editarEducacao = function(id) {
+    const edu = curriculo.educacao.find(e => e.id === id);
+    if (edu) {
+        document.getElementById('instituicao').value = edu.instituicao;
+        document.getElementById('curso').value = edu.curso;
+        document.getElementById('periodoEdu').value = edu.periodo;
+        document.getElementById('tipoEdu').value = edu.tipo;
+        
+        // Remove a educação do array para edição
+        curriculo.educacao = curriculo.educacao.filter(e => e.id !== id);
+        
+        if (window.atualizarPreviewGlobal) {
+            window.atualizarPreviewGlobal();
+        }
+        
+        alert('Formação carregada para edição. Modifique os campos e clique em "+ Adicionar Formação" novamente.');
+    }
+};
+
+/**
+ * Carrega um certificado para edição (FUNÇÃO GLOBAL)
+ */
+window.editarCertificado = function(id) {
+    const cert = curriculo.certificados.find(c => c.id === id);
+    if (cert) {
+        document.getElementById('certificadoTitulo').value = cert.titulo;
+        document.getElementById('certificadoInstituicao').value = cert.instituicao;
+        document.getElementById('certificadoAno').value = cert.ano;
+        
+        // Remove o certificado do array para edição
+        curriculo.certificados = curriculo.certificados.filter(c => c.id !== id);
+        
+        if (window.atualizarPreviewGlobal) {
+            window.atualizarPreviewGlobal();
+        }
+        
+        alert('Certificado carregado para edição. Modifique os campos e clique em "+ Adicionar Certificado" novamente.');
+    }
+};
+
+/**
+ * Carrega uma palestra para edição (FUNÇÃO GLOBAL)
+ */
+window.editarPalestra = function(id) {
+    const pal = curriculo.palestras.find(p => p.id === id);
+    if (pal) {
+        document.getElementById('palestraTitulo').value = pal.titulo;
+        document.getElementById('palestraInstituicao').value = pal.instituicao;
+        
+        // Remove a palestra do array para edição
+        curriculo.palestras = curriculo.palestras.filter(p => p.id !== id);
+        
+        if (window.atualizarPreviewGlobal) {
+            window.atualizarPreviewGlobal();
+        }
+        
+        alert('Palestra carregada para edição. Modifique os campos e clique em "+ Adicionar Palestra/Minicurso" novamente.');
+    }
+};
