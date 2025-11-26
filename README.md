@@ -101,7 +101,6 @@ O projeto é totalmente responsivo e se adapta a:
 
 - [ ] Exportação para PDF
 - [ ] Mais templates de currículo
-- [ ] Editor WYSIWYG para README
 - [ ] Salvamento local (localStorage)
 - [ ] Sistema de templates predefinidos
 - [ ] Modo escuro
