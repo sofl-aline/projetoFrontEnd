@@ -5,15 +5,6 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Referências aos botões
-    const btnGerar = document.getElementById('btnGerar');
-    const btnCopiar = document.getElementById('btnCopiar');
-    const btnBaixar = document.getElementById('btnBaixar');
-
-    // Adiciona eventos aos botões
-    if (btnGerar) btnGerar.addEventListener('click', gerarPreview);
-    if (btnCopiar) btnCopiar.addEventListener('click', copiarREADME);
-    if (btnBaixar) btnBaixar.addEventListener('click', baixarREADME);
 
     // Atualiza preview em tempo real ao digitar
     const campos = [
